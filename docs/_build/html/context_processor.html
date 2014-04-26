@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Context Processor &mdash; Bambu Blog 0.2.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="index.html" />
+    <link rel="next" title="Cron job and webhook" href="cron.html" />
+    <link rel="prev" title="Feeds" href="feeds.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cron.html" title="Cron job and webhook"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="feeds.html" title="Feeds"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="context-processor">
+<h1>Context Processor<a class="headerlink" href="#context-processor" title="Permalink to this headline">¶</a></h1>
+<p>Bambu Blog has a context processor that will provide a queryset of all the published blog posts. By
+design it&#8217;s supplied as a callable rather than an evaluated query to avoid it being run unnecessarily,
+and you should limit the number of returned posts via the <tt class="docutils literal"><span class="pre">range</span></tt> template tag.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Add the following to your list of processors:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bambu</span><span class="o">.</span><span class="n">blog</span><span class="o">.</span><span class="n">context_processors</span><span class="o">.</span><span class="n">latest</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Loop through the latest blog posts in your template like this:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;ul class=&quot;latest-blog-posts&quot;&gt;
+        {% for post in latest_blog_posts|slice:&#39;:3&#39; %}
+                &lt;li class=&quot;post&quot;&gt;
+                        &lt;a href=&quot;{{ post.get_absolute_url }}&quot;&gt;{{ post.title }}&lt;/a&gt;
+                &lt;/li&gt;
+        {% endfor %}
+&lt;/ul&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Context Processor</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="feeds.html"
+                        title="previous chapter">Feeds</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="cron.html"
+                        title="next chapter">Cron job and webhook</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/context_processor.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cron.html" title="Cron job and webhook"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="feeds.html" title="Feeds"
+             >previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Steadman.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

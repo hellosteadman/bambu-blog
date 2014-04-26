@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Feeds &mdash; Bambu Blog 0.2.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="index.html" />
+    <link rel="next" title="Context Processor" href="context_processor.html" />
+    <link rel="prev" title="Views and templates" href="templates.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="context_processor.html" title="Context Processor"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="templates.html" title="Views and templates"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="feeds">
+<h1>Feeds<a class="headerlink" href="#feeds" title="Permalink to this headline">¶</a></h1>
+<p>Of course Bambu Blog exposes RSS feeds. It uses similar URL patterns to those found in well-configured
+WordPress sites, with lots of URLs suffixed with <cite>/feed/</cite> (for example, the blog index, category views,
+author views, etc).</p>
+<div class="section" id="blog-index-blog-feed">
+<h2>Blog index (<cite>/blog/feed/</cite>)<a class="headerlink" href="#blog-index-blog-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts. When the <tt class="docutils literal"><span class="pre">page</span></tt> querystring argument is set to 2, the 10 published posts
+before that are shown, and so on (this pagination is used throughout all of the feeds).</p>
+</div>
+<div class="section" id="blog-posts-by-year-blog-2014-feed">
+<h2>Blog posts by year (<cite>/blog/2014/feed/</cite>)<a class="headerlink" href="#blog-posts-by-year-blog-2014-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year (mainly provided to conform to WordPress&#8217; URL conventions).</p>
+</div>
+<div class="section" id="blog-posts-by-month-blog-2014-04-feed">
+<h2>Blog posts by month (<cite>/blog/2014/04/feed/</cite>)<a class="headerlink" href="#blog-posts-by-month-blog-2014-04-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year and month (mainly provided to conform to WordPress&#8217; URL
+conventions).</p>
+</div>
+<div class="section" id="blog-posts-by-day-blog-2014-04-26-feed">
+<h2>Blog posts by day (<cite>/blog/2014/04/26/feed/</cite>)<a class="headerlink" href="#blog-posts-by-day-blog-2014-04-26-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year, month and day (mainly provided to conform to WordPress&#8217; URL
+conventions).</p>
+</div>
+<div class="section" id="blog-posts-by-tag-blog-tag-tag-slug-feed">
+<h2>Blog posts by tag (<cite>/blog/tag/tag-slug/feed/</cite>)<a class="headerlink" href="#blog-posts-by-tag-blog-tag-tag-slug-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts tagged <tt class="docutils literal"><span class="pre">tag-slug</span></tt></p>
+</div>
+<div class="section" id="blog-posts-by-category-blog-category-category-slug-feed">
+<h2>Blog posts by category (<cite>/blog/category/category-slug/feed/</cite>)<a class="headerlink" href="#blog-posts-by-category-blog-category-category-slug-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts in the category <tt class="docutils literal"><span class="pre">category-slug</span></tt></p>
+</div>
+<div class="section" id="blog-posts-by-tag-blog-author-username-feed">
+<h2>Blog posts by tag (<cite>/blog/author/username/feed/</cite>)<a class="headerlink" href="#blog-posts-by-tag-blog-author-username-feed" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts by the user with the username <tt class="docutils literal"><span class="pre">username</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Feeds</a><ul>
+<li><a class="reference internal" href="#blog-index-blog-feed">Blog index (<cite>/blog/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-year-blog-2014-feed">Blog posts by year (<cite>/blog/2014/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-month-blog-2014-04-feed">Blog posts by month (<cite>/blog/2014/04/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-day-blog-2014-04-26-feed">Blog posts by day (<cite>/blog/2014/04/26/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-tag-blog-tag-tag-slug-feed">Blog posts by tag (<cite>/blog/tag/tag-slug/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-category-blog-category-category-slug-feed">Blog posts by category (<cite>/blog/category/category-slug/feed/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-tag-blog-author-username-feed">Blog posts by tag (<cite>/blog/author/username/feed/</cite>)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="templates.html"
+                        title="previous chapter">Views and templates</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="context_processor.html"
+                        title="next chapter">Context Processor</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/feeds.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="context_processor.html" title="Context Processor"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="templates.html" title="Views and templates"
+             >previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Steadman.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

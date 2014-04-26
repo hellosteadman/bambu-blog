@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Views and templates &mdash; Bambu Blog 0.2.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="index.html" />
+    <link rel="next" title="Feeds" href="feeds.html" />
+    <link rel="prev" title="bambu Blog" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="feeds.html" title="Feeds"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="bambu Blog"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="views-and-templates">
+<h1>Views and templates<a class="headerlink" href="#views-and-templates" title="Permalink to this headline">¶</a></h1>
+<p>Bambu Blog provides a number of views and templates</p>
+<div class="section" id="blog-index-blog">
+<h2>Blog index (<cite>/blog/</cite>)<a class="headerlink" href="#blog-index-blog" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts. When the <tt class="docutils literal"><span class="pre">page</span></tt> querystring argument is set to 2, the 10 published posts
+before that are shown, and so on (this pagination is used throughout all of the list views).</p>
+<dl class="docutils">
+<dt>Template:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-year-blog-2014">
+<h2>Blog posts by year (<cite>/blog/2014/</cite>)<a class="headerlink" href="#blog-posts-by-year-blog-2014" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year.</p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-year.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-month-blog-2014-04">
+<h2>Blog posts by month (<cite>/blog/2014/04/</cite>)<a class="headerlink" href="#blog-posts-by-month-blog-2014-04" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year and month.</p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-month.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts-year.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-day-blog-2014-04-26">
+<h2>Blog posts by day (<cite>/blog/2014/04/26/</cite>)<a class="headerlink" href="#blog-posts-by-day-blog-2014-04-26" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts of the given year, month and day.</p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-day.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts-month.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts-year.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-post-blog-2014-04-26-slug">
+<h2>Blog post (<cite>/blog/2014/04/26/slug/</cite>)<a class="headerlink" href="#blog-post-blog-2014-04-26-slug" title="Permalink to this headline">¶</a></h2>
+<p>A single blog post, matching a year, month, day and slug.</p>
+<dl class="docutils">
+<dt>Template:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/post.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="submit-blog-post-comment-blog-2014-04-26-slug-comment">
+<h2>Submit blog post comment (<cite>/blog/2014/04/26/slug/comment/</cite>)<a class="headerlink" href="#submit-blog-post-comment-blog-2014-04-26-slug-comment" title="Permalink to this headline">¶</a></h2>
+<p>A POST-only view that validates then submits a form that allows comments to be posted
+to a blog entry. The comment model must have a boolean <tt class="docutils literal"><span class="pre">spam</span></tt> field and a
+<tt class="docutils literal"><span class="pre">check_for_spam()</span></tt> method that takes the HTTP request as its only argument. This
+method should return <tt class="docutils literal"><span class="pre">True</span></tt> or <tt class="docutils literal"><span class="pre">False</span></tt>.</p>
+<p>If the form is valid and submission is successful, an <tt class="docutils literal"><span class="pre">HttpResponseRedirect</span></tt> is returned that
+redirects the user back to the blog post page, with a message (via <tt class="docutils literal"><span class="pre">django.contrib.messages</span></tt>).</p>
+<dl class="docutils">
+<dt>Template (if submission was unsuccessful):</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/post.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-tag-blog-tag-tag-slug">
+<h2>Blog posts by tag (<cite>/blog/tag/tag-slug/</cite>)<a class="headerlink" href="#blog-posts-by-tag-blog-tag-tag-slug" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts tagged <tt class="docutils literal"><span class="pre">tag-slug</span></tt></p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-tag.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-category-blog-category-category-slug">
+<h2>Blog posts by category (<cite>/blog/category/category-slug/</cite>)<a class="headerlink" href="#blog-posts-by-category-blog-category-category-slug" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts in the category <tt class="docutils literal"><span class="pre">category-slug</span></tt></p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-category.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="blog-posts-by-tag-blog-author-username">
+<h2>Blog posts by tag (<cite>/blog/author/username/</cite>)<a class="headerlink" href="#blog-posts-by-tag-blog-author-username" title="Permalink to this headline">¶</a></h2>
+<p>The 10 latest blog posts by the user with the username <tt class="docutils literal"><span class="pre">username</span></tt>.</p>
+<dl class="docutils">
+<dt>Templates:</dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">blog/posts-author.html</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">blog/posts.html</span></tt></li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Views and templates</a><ul>
+<li><a class="reference internal" href="#blog-index-blog">Blog index (<cite>/blog/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-year-blog-2014">Blog posts by year (<cite>/blog/2014/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-month-blog-2014-04">Blog posts by month (<cite>/blog/2014/04/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-day-blog-2014-04-26">Blog posts by day (<cite>/blog/2014/04/26/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-post-blog-2014-04-26-slug">Blog post (<cite>/blog/2014/04/26/slug/</cite>)</a></li>
+<li><a class="reference internal" href="#submit-blog-post-comment-blog-2014-04-26-slug-comment">Submit blog post comment (<cite>/blog/2014/04/26/slug/comment/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-tag-blog-tag-tag-slug">Blog posts by tag (<cite>/blog/tag/tag-slug/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-category-blog-category-category-slug">Blog posts by category (<cite>/blog/category/category-slug/</cite>)</a></li>
+<li><a class="reference internal" href="#blog-posts-by-tag-blog-author-username">Blog posts by tag (<cite>/blog/author/username/</cite>)</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">bambu Blog</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="feeds.html"
+                        title="next chapter">Feeds</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/templates.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="feeds.html" title="Feeds"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="bambu Blog"
+             >previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Steadman.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

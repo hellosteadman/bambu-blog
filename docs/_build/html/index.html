@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>bambu Blog &mdash; Bambu Blog 0.2.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="#" />
+    <link rel="next" title="Views and templates" href="templates.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="templates.html" title="Views and templates"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bambu-blog">
+<h1>bambu Blog<a class="headerlink" href="#bambu-blog" title="Permalink to this headline">¶</a></h1>
+<p>A simple set of models for a basic blog, with some tools for
+custom-designed blog post writing</p>
+<div class="section" id="about-bambu-blog">
+<h2>About Bambu Blog<a class="headerlink" href="#about-bambu-blog" title="Permalink to this headline">¶</a></h2>
+<p>Bambu Blog was originally intended as a simple blogging tool for web
+apps, that allowed developers to quickly setup a blog for their app
+based on a common Bootstrap template, without needing to manage another
+site and set of user accounts. It used Markdown to render text-only
+copy, and <a class="reference external" href="https://github.com/iamsteadman/bambu-attachments">Bambu
+Attachments</a> to
+handle uploading images and other media.</p>
+<p>It&#8217;s grown a little since then, and now supports either the
+<a class="reference external" href="https://bitbucket.org/carljm/django-markitup/src">MarkItUp</a> or
+<a class="reference external" href="https://github.com/aljosa/django-tinymce">TinyMCE</a> editors (just
+install the Django app you want and Bambu Blog will detect it and apply
+the appropriate class names to the main body textbox).</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install the package via Pip:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install bambu-blog
+</pre></div>
+</div>
+<p>Add it to your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> list:</p>
+<div class="highlight-python"><div class="highlight"><pre>INSTALLED_APPS = (
+    ...
+    &#39;bambu.blog&#39;
+)
+</pre></div>
+</div>
+<p>Add <tt class="docutils literal"><span class="pre">bambu.blog.urls</span></tt> to your URLconf:</p>
+<div class="highlight-python"><div class="highlight"><pre>urlpatterns = patterns(&#39;&#39;,
+    ...
+    url(r&#39;^blog/&#39;, include(&#39;bambu.blog.urls&#39;)),
+)
+</pre></div>
+</div>
+</div>
+<div class="section" id="sync-the-database">
+<h2>Sync the database<a class="headerlink" href="#sync-the-database" title="Permalink to this headline">¶</a></h2>
+<p>Run <tt class="docutils literal"><span class="pre">manage.py</span> <span class="pre">syncdb</span></tt> or <tt class="docutils literal"><span class="pre">manage.py</span> <span class="pre">migrate</span></tt> to setup the database
+tables.</p>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>The blog uses a number of templates. All of the important ones extend
+<tt class="docutils literal"><span class="pre">blog/base.html</span></tt>, so you should start by overriding that template to
+set it up how you like it. The naming convention used throughout the
+Bambu collection of apps designates the main content area via the Jinja
+block <tt class="docutils literal"><span class="pre">form_content</span></tt>. A block is already defined called <tt class="docutils literal"><span class="pre">sidebar</span></tt>,
+so you can either place HTML in there or override
+<tt class="docutils literal"><span class="pre">blog/sidebar.inc.html</span></tt>.</p>
+<p>Add a blog post via the admin area of your site. As you&#8217;re logged in as
+a staff member you don&#8217;t have to publish the blog post to be able to see
+it on the site once saved. View the blog post index at /blog/.</p>
+<p>Override the <tt class="docutils literal"><span class="pre">blog/post.html</span></tt> template to tweak the display of the
+blog post.</p>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Full documentation can be found at
+<a class="reference external" href="http://bambu-blog.readthedocs.org/">ReadTheDocs</a>.</p>
+</div>
+<div class="section" id="questions-or-suggestions">
+<h2>Questions or suggestions?<a class="headerlink" href="#questions-or-suggestions" title="Permalink to this headline">¶</a></h2>
+<p>Find me on Twitter (&#64;iamsteadman) or <a class="reference external" href="http://steadman.io/">visit my blog</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="templates.html">Views and templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feeds.html">Feeds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context_processor.html">Context Processor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cron.html">Cron job and webhook</a></li>
+<li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="haystack.html">Haystack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xmlrpc.html">XML-RPC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sitemaps.html">Sitemaps</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">bambu Blog</a><ul>
+<li><a class="reference internal" href="#about-bambu-blog">About Bambu Blog</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#sync-the-database">Sync the database</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic usage</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#questions-or-suggestions">Questions or suggestions?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="templates.html"
+                        title="next chapter">Views and templates</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="templates.html" title="Views and templates"
+             >next</a> |</li>
+        <li><a href="#">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Steadman.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

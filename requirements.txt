@@ -1,0 +1,10 @@
+Django>=1.4,
+pyquery,
+html2text,
+django-taggit,
+sorl-thumbnail,
+pyquery,
+bambu-markup,
+bambu-oembed,
+bambu-attachments
+bambu-xmlrpc

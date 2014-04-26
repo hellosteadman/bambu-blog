@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Models &mdash; Bambu Blog 0.2.4 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="index.html" />
+    <link rel="next" title="XML-RPC" href="xmlrpc.html" />
+    <link rel="prev" title="Haystack" href="haystack.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlrpc.html" title="XML-RPC"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="haystack.html" title="Haystack"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-bambu.blog.models">
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-bambu.blog.models" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="bambu.blog.models.Category">
+<em class="property">class </em><tt class="descclassname">bambu.blog.models.</tt><tt class="descname">Category</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu.blog.models.Category" title="Permalink to this definition">¶</a></dt>
+<dd><p>A category under which blog posts can be filed</p>
+<dl class="attribute">
+<dt id="bambu.blog.models.Category.name">
+<tt class="descname">name</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Category.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The category name</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Category.post_percent">
+<tt class="descname">post_percent</tt><a class="headerlink" href="#bambu.blog.models.Category.post_percent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The percentage of total blog posts that are in this category</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Category.slug">
+<tt class="descname">slug</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Category.slug" title="Permalink to this definition">¶</a></dt>
+<dd><p>The category slug (unique)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bambu.blog.models.Post">
+<em class="property">class </em><tt class="descclassname">bambu.blog.models.</tt><tt class="descname">Post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu.blog.models.Post" title="Permalink to this definition">¶</a></dt>
+<dd><p>A blog post</p>
+<dl class="class">
+<dt id="bambu.blog.models.Post.QuerySet">
+<em class="property">class </em><tt class="descname">QuerySet</tt><big>(</big><em>model=None</em>, <em>query=None</em>, <em>using=None</em><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.QuerySet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom queryset that adds a few utility functions to the standard one</p>
+<dl class="method">
+<dt id="bambu.blog.models.Post.QuerySet.css">
+<tt class="descname">css</tt><big>(</big><em>rendered=False</em><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.QuerySet.css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns rendered CSS for all of the posts in the query</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bambu.blog.models.Post.QuerySet.live">
+<tt class="descname">live</tt><big>(</big><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.QuerySet.live" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns only posts in the future that are marked as published</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.attachments">
+<tt class="descclassname">Post.</tt><tt class="descname">attachments</tt><a class="headerlink" href="#bambu.blog.models.Post.attachments" title="Permalink to this definition">¶</a></dt>
+<dd><p>The attachments (images and other media) attached to the post (optional)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.author">
+<tt class="descclassname">Post.</tt><tt class="descname">author</tt><a class="headerlink" href="#bambu.blog.models.Post.author" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">auth.User</span></tt> that wrote the post</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.body">
+<tt class="descclassname">Post.</tt><tt class="descname">body</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.body" title="Permalink to this definition">¶</a></dt>
+<dd><p>The body of the post. By default this is a plain text field within the admin, but you can install
+django-markitup or django-tinymce and the admin will automatically detect one of those apps.
+Regardless of textbox interface, the body is always run through PyQuery&#8217;s HTML parser, in order to
+generate a viable, readable excerpt that ignores references to things like oEmbed resources and
+images, and flattens lists, headings, quotes etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.broadcast">
+<tt class="descclassname">Post.</tt><tt class="descname">broadcast</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.broadcast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether a webhook event was fired when the post was published</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.categories">
+<tt class="descclassname">Post.</tt><tt class="descname">categories</tt><a class="headerlink" href="#bambu.blog.models.Post.categories" title="Permalink to this definition">¶</a></dt>
+<dd><p>The categories assigned to the post (optional)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.comments">
+<tt class="descclassname">Post.</tt><tt class="descname">comments</tt><a class="headerlink" href="#bambu.blog.models.Post.comments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic link to a comment model, as defined in the <tt class="docutils literal"><span class="pre">BLOG_COMMENTS_MODEL</span></tt> setting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.css">
+<tt class="descclassname">Post.</tt><tt class="descname">css</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom CSS for the post (great for making custom-designed pages for each post)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.date">
+<tt class="descclassname">Post.</tt><tt class="descname">date</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.date" title="Permalink to this definition">¶</a></dt>
+<dd><p>The post date</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.excerpt">
+<tt class="descclassname">Post.</tt><tt class="descname">excerpt</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.excerpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>A short, automatically-generated excerpt for the post</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bambu.blog.models.Post.featured_attachment">
+<tt class="descclassname">Post.</tt><tt class="descname">featured_attachment</tt><big>(</big><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.featured_attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the first attachment for the post, that&#8217;s marked as Featured</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bambu.blog.models.Post.next_post">
+<tt class="descclassname">Post.</tt><tt class="descname">next_post</tt><big>(</big><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.next_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the next blog post in the sequence (irrespective of category, tag or author)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bambu.blog.models.Post.previous_post">
+<tt class="descclassname">Post.</tt><tt class="descname">previous_post</tt><big>(</big><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.previous_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the previous blog post in the sequence (irrespective of category, tag or author)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.published">
+<tt class="descclassname">Post.</tt><tt class="descname">published</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.published" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the post is published (<tt class="docutils literal"><span class="pre">True</span></tt> by default)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="bambu.blog.models.Post.render_css">
+<tt class="descclassname">Post.</tt><tt class="descname">render_css</tt><big>(</big><big>)</big><a class="headerlink" href="#bambu.blog.models.Post.render_css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs CSS through Django&#8217;s templating engine, allowing you to write CSS that references
+attachment URLs and the post ID without actually having to know that they are</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.slug">
+<tt class="descclassname">Post.</tt><tt class="descname">slug</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.slug" title="Permalink to this definition">¶</a></dt>
+<dd><p>The slug of the post (if no title is given, a slug is generated from the total count of blog
+posts</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.tags">
+<tt class="descclassname">Post.</tt><tt class="descname">tags</tt><em class="property"> = &lt;taggit.managers._TaggableManager object at 0xafbf54c&gt;</em><a class="headerlink" href="#bambu.blog.models.Post.tags" title="Permalink to this definition">¶</a></dt>
+<dd><p>The tags assigned to the post (optional)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="bambu.blog.models.Post.title">
+<tt class="descclassname">Post.</tt><tt class="descname">title</tt><em class="property"> = None</em><a class="headerlink" href="#bambu.blog.models.Post.title" title="Permalink to this definition">¶</a></dt>
+<dd><p>The title of the post (optional)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="bambu.blog.models.PostUpload">
+<em class="property">class </em><tt class="descclassname">bambu.blog.models.</tt><tt class="descname">PostUpload</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu.blog.models.PostUpload" title="Permalink to this definition">¶</a></dt>
+<dd><p>A temporary holding place for media uploaded via XML-RPC</p>
+<dl class="method">
+<dt id="bambu.blog.models.PostUpload.convert_to_attachment">
+<tt class="descname">convert_to_attachment</tt><big>(</big><em>post</em><big>)</big><a class="headerlink" href="#bambu.blog.models.PostUpload.convert_to_attachment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the temporary uploaded file into an attachment</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-bambu.blog.managers">
+<span id="managers"></span><h2>Managers<a class="headerlink" href="#module-bambu.blog.managers" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="bambu.blog.managers.PostManager">
+<em class="property">class </em><tt class="descclassname">bambu.blog.managers.</tt><tt class="descname">PostManager</tt><a class="headerlink" href="#bambu.blog.managers.PostManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>A custom manager for the <tt class="docutils literal"><span class="pre">blog.Post</span></tt> model</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Models</a><ul>
+<li><a class="reference internal" href="#module-bambu.blog.managers">Managers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="haystack.html"
+                        title="previous chapter">Haystack</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="xmlrpc.html"
+                        title="next chapter">XML-RPC</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="xmlrpc.html" title="XML-RPC"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="haystack.html" title="Haystack"
+             >previous</a> |</li>
+        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Steadman.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
