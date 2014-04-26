@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup
 from os import path
 
 setup(
@@ -21,7 +21,7 @@ setup(
         'bambu-oembed',
         'bambu-attachments',
         'bambu-xmlrpc'
-    ]
+    ],
     namespace_packages = ['bambu'],
     packages = [
         'bambu.blog',
