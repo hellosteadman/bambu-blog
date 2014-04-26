@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from distutils.core import setup
+from os import path
 
 setup(
     name = 'bambu-blog',
@@ -9,7 +10,18 @@ setup(
     author_email = 'mark@steadman.io',
     url = 'http://pypi.python.org/pypi/bambu-blog',
     long_description = open(path.join(path.dirname(__file__), 'README')).read(),
-    install_requires = open(path.join(path.dirname(__file__), 'requirements.txt')).read().splitlines(),
+    install_requires = [
+        'Django>=1.4',
+        'pyquery',
+        'html2text',
+        'django-taggit',
+        'sorl-thumbnail',
+        'pyquery',
+        'bambu-markup',
+        'bambu-oembed',
+        'bambu-attachments',
+        'bambu-xmlrpc'
+    ]
     namespace_packages = ['bambu'],
     packages = [
         'bambu.blog',
