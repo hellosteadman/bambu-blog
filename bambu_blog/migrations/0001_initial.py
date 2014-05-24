@@ -14,7 +14,7 @@ class Migration(SchemaMigration):
             ('name', self.gf('django.db.models.fields.CharField')(max_length=100, db_index=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=100)),
         ))
-        db.send_create_signal(u'bambu_blog', ['Category'])
+        db.send_create_signal('bambu_blog', ['Category'])
 
         # Adding model 'Post'
         db.create_table('blog_post', (
@@ -29,14 +29,14 @@ class Migration(SchemaMigration):
             ('excerpt', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
             ('css', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
         ))
-        db.send_create_signal(u'bambu_blog', ['Post'])
+        db.send_create_signal('bambu_blog', ['Post'])
 
         # Adding M2M table for field categories on 'Post'
         m2m_table_name = db.shorten_name('blog_post_categories')
         db.create_table(m2m_table_name, (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('post', models.ForeignKey(orm[u'bambu_blog.post'], null=False)),
-            ('category', models.ForeignKey(orm[u'bambu_blog.category'], null=False))
+            ('post', models.ForeignKey(orm['bambu_blog.post'], null=False)),
+            ('category', models.ForeignKey(orm['bambu_blog.category'], null=False))
         ))
         db.create_unique(m2m_table_name, ['post_id', 'category_id'])
 
@@ -48,7 +48,7 @@ class Migration(SchemaMigration):
             ('size', self.gf('django.db.models.fields.PositiveIntegerField')()),
             ('mimetype', self.gf('django.db.models.fields.CharField')(max_length=50, db_index=True)),
         ))
-        db.send_create_signal(u'bambu_blog', ['PostUpload'])
+        db.send_create_signal('bambu_blog', ['PostUpload'])
 
 
     def backwards(self, orm):
@@ -95,18 +95,18 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        u'bambu_blog.category': {
+        'bambu_blog.category': {
             'Meta': {'ordering': "('name',)", 'object_name': 'Category', 'db_table': "'blog_category'"},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
         },
-        u'bambu_blog.post': {
+        'bambu_blog.post': {
             'Meta': {'ordering': "('-date',)", 'object_name': 'Post', 'db_table': "'blog_post'"},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'blog_posts'", 'to': u"orm['auth.User']"}),
             'body': ('django.db.models.fields.TextField', [], {}),
             'broadcast': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'categories': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'posts'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['bambu_blog.Category']"}),
+            'categories': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'posts'", 'null': 'True', 'symmetrical': 'False', 'to': "orm['bambu_blog.Category']"}),
             'css': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'date': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True'}),
             'excerpt': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -115,7 +115,7 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
-        u'bambu_blog.postupload': {
+        'bambu_blog.postupload': {
             'Meta': {'object_name': 'PostUpload', 'db_table': "'blog_post_upload'"},
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
