@@ -17,10 +17,6 @@ if 'bambu_webhooks' in settings.INSTALLED_APPS:
 
 COMMENTS_MODEL = getattr(settings, 'BLOG_COMMENTS_MODEL', 'comments.Comment')
 
-class CustomTitleString(unicode):
-    def title(self):
-        return str(self[6:]).title()
-
 class Category(models.Model):
     """A category under which blog posts can be filed"""
     
@@ -45,7 +41,6 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name_plural = 'categories'
         db_table = 'blog_category'
-        app_label = CustomTitleString('bambu_blog')
 
 class Post(models.Model):
     """
@@ -210,7 +205,6 @@ class Post(models.Model):
         ordering = ('-date',)
         get_latest_by = 'date'
         db_table = 'blog_post'
-        app_label = CustomTitleString('bambu_blog')
 
     class QuerySet(models.query.QuerySet):
         """
@@ -277,7 +271,6 @@ class PostUpload(models.Model):
     
     class Meta:
         db_table = 'blog_post_upload'
-        app_label = CustomTitleString('bambu_blog')
 
 if 'bambu_webhooks' in settings.INSTALLED_APPS:
     site.register('post_published',
