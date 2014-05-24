@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>XML-RPC &mdash; Bambu Blog 0.2.4 documentation</title>
+    <title>XML-RPC &mdash; Bambu Blog 2.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.4',
+        VERSION:     '2.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="index.html" />
+    <link rel="top" title="Bambu Blog 2.0.1 documentation" href="index.html" />
     <link rel="next" title="Sitemaps" href="sitemaps.html" />
     <link rel="prev" title="Models" href="models.html" /> 
   </head>
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="models.html" title="Models"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Bambu Blog 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -55,8 +55,56 @@
   <div class="section" id="xml-rpc">
 <h1>XML-RPC<a class="headerlink" href="#xml-rpc" title="Permalink to this headline">¶</a></h1>
 <p>Although not bulletproof, there is some XML-RPC support built in to Bambu Blog. The server is supplied
-by <a href="#id1"><span class="problematic" id="id2">`</span></a>Bambu XML-RPC`&lt;<a class="reference external" href="https://github.com/iamsteadman/bambu-xmlrpc">https://github.com/iamsteadman/bambu-xmlrpc</a>&gt;_.</p>
+by <a class="reference external" href="https://github.com/iamsteadman/bambu-xmlrpc">Bambu XML-RPC</a>.</p>
 <p>It exposes endpoints that support the metaWeblog and Blogger XML-RPC interfaces.</p>
+<span class="target" id="module-bambu_blog.xmlrpc"></span><dl class="function">
+<dt id="bambu_blog.xmlrpc.delete_post">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">delete_post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.delete_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.deletePost</span></tt> handler (also conforms to <tt class="docutils literal"><span class="pre">blogger.deletePost</span></tt>)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.edit_post">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">edit_post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.edit_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.editPost</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.get_blogs">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">get_blogs</tt><big>(</big><em>appkey</em>, <em>username</em>, <em>password</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.get_blogs" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">blogger.getUserInfo</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.get_categories">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">get_categories</tt><big>(</big><em>blogid</em>, <em>username</em>, <em>password</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.get_categories" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.getCategories</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.get_post">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">get_post</tt><big>(</big><em>postid</em>, <em>username</em>, <em>password</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.get_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.getPost</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.get_posts">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">get_posts</tt><big>(</big><em>blogid</em>, <em>username</em>, <em>password</em>, <em>numberOfPosts=10</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.get_posts" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.getRecentPosts</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.new_post">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">new_post</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.new_post" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.newPost</span></tt> handler</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="bambu_blog.xmlrpc.upload_media">
+<tt class="descclassname">bambu_blog.xmlrpc.</tt><tt class="descname">upload_media</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#bambu_blog.xmlrpc.upload_media" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <tt class="docutils literal"><span class="pre">metaWeblog.newMediaObject</span></tt> handler</p>
+</dd></dl>
+
 </div>
 
 
@@ -108,7 +156,7 @@ by <a href="#id1"><span class="problematic" id="id2">`</span></a>Bambu XML-RPC`&
         <li class="right" >
           <a href="models.html" title="Models"
              >previous</a> |</li>
-        <li><a href="index.html">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Bambu Blog 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

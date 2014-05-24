@@ -1,4 +1,4 @@
-Context Processor
+Context processor
 =================
 
 Bambu Blog has a context processor that will provide a queryset of all the published blog posts. By
@@ -10,7 +10,7 @@ Installation
 
 Add the following to your list of processors::
 
-	bambu.blog.context_processors.latest
+	bambu_blog.context_processors.latest
 
 Usage
 -----

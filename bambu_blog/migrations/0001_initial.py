@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
 from south.db import db
-from django.conf import settings
-from django.db import transaction
 from south.v2 import SchemaMigration
 from django.db import models
 
@@ -10,32 +8,61 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Post.excerpt'
-        db.add_column(u'blog_post', 'excerpt',
-                      self.gf('django.db.models.fields.TextField')(null=True, blank=True),
-                      keep_default=False)
+        # Adding model 'Category'
+        db.create_table('blog_category', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=100, db_index=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(unique=True, max_length=100)),
+        ))
+        db.send_create_signal(u'bambu_blog', ['Category'])
 
-        if not db.dry_run and 'grappelli' in settings.INSTALLED_APPS:
-            with transaction.commit_on_success():
-                from pyquery import PyQuery
-                from django.template.defaultfilters import truncatewords
-                from markdown import markdown
+        # Adding model 'Post'
+        db.create_table('blog_post', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='blog_posts', to=orm['auth.User'])),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=100, null=True, blank=True)),
+            ('slug', self.gf('django.db.models.fields.SlugField')(max_length=100)),
+            ('date', self.gf('django.db.models.fields.DateTimeField')(db_index=True)),
+            ('published', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('broadcast', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('body', self.gf('django.db.models.fields.TextField')()),
+            ('excerpt', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+            ('css', self.gf('django.db.models.fields.TextField')(null=True, blank=True)),
+        ))
+        db.send_create_signal(u'bambu_blog', ['Post'])
 
-                for post in orm.Post.objects.filter(body__isnull = False).exclude(body = ''):
-                    post.body = markdown(post.body)
+        # Adding M2M table for field categories on 'Post'
+        m2m_table_name = db.shorten_name('blog_post_categories')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('post', models.ForeignKey(orm[u'bambu_blog.post'], null=False)),
+            ('category', models.ForeignKey(orm[u'bambu_blog.category'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['post_id', 'category_id'])
 
-                    doc = PyQuery('<body>%s</body>' % post.body)
-                    for p in doc('p'):
-                        if not p.text or (p.text.startswith('http://') or p.text.startswith('https://') or (p.text.startswith('[') and p.text.endswith(']'))):
-                            PyQuery(p).remove()
-
-                    post.excerpt = truncatewords(doc('p').text(), 30)
-                    post.save()
+        # Adding model 'PostUpload'
+        db.create_table('blog_post_upload', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('file', self.gf('django.db.models.fields.files.FileField')(max_length=255)),
+            ('url', self.gf('django.db.models.fields.CharField')(max_length=255, db_index=True)),
+            ('size', self.gf('django.db.models.fields.PositiveIntegerField')()),
+            ('mimetype', self.gf('django.db.models.fields.CharField')(max_length=50, db_index=True)),
+        ))
+        db.send_create_signal(u'bambu_blog', ['PostUpload'])
 
 
     def backwards(self, orm):
-        # Deleting field 'Post.excerpt'
-        db.delete_column(u'blog_post', 'excerpt')
+        # Deleting model 'Category'
+        db.delete_table('blog_category')
+
+        # Deleting model 'Post'
+        db.delete_table('blog_post')
+
+        # Removing M2M table for field categories on 'Post'
+        db.delete_table(db.shorten_name('blog_post_categories'))
+
+        # Deleting model 'PostUpload'
+        db.delete_table('blog_post_upload')
 
 
     models = {
@@ -68,18 +95,18 @@ class Migration(SchemaMigration):
             'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"}),
             'username': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '30'})
         },
-        u'blog.category': {
-            'Meta': {'ordering': "('name',)", 'object_name': 'Category'},
+        u'bambu_blog.category': {
+            'Meta': {'ordering': "('name',)", 'object_name': 'Category', 'db_table': "'blog_category'"},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100', 'db_index': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
         },
-        u'blog.post': {
-            'Meta': {'ordering': "('-date',)", 'object_name': 'Post'},
+        u'bambu_blog.post': {
+            'Meta': {'ordering': "('-date',)", 'object_name': 'Post', 'db_table': "'blog_post'"},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'blog_posts'", 'to': u"orm['auth.User']"}),
             'body': ('django.db.models.fields.TextField', [], {}),
             'broadcast': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'categories': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'posts'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['blog.Category']"}),
+            'categories': ('django.db.models.fields.related.ManyToManyField', [], {'blank': 'True', 'related_name': "'posts'", 'null': 'True', 'symmetrical': 'False', 'to': u"orm['bambu_blog.Category']"}),
             'css': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
             'date': ('django.db.models.fields.DateTimeField', [], {'db_index': 'True'}),
             'excerpt': ('django.db.models.fields.TextField', [], {'null': 'True', 'blank': 'True'}),
@@ -88,7 +115,7 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '100'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '100', 'null': 'True', 'blank': 'True'})
         },
-        u'blog.postupload': {
+        u'bambu_blog.postupload': {
             'Meta': {'object_name': 'PostUpload', 'db_table': "'blog_post_upload'"},
             'file': ('django.db.models.fields.files.FileField', [], {'max_length': '255'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -105,4 +132,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['blog']
+    complete_apps = ['bambu_blog']

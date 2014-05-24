@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.utils.timezone import now
-from bambu.blog.models import Post
+from bambu_blog.models import Post
 
 class PostForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

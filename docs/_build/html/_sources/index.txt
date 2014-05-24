@@ -36,16 +36,16 @@ Add it to your ``INSTALLED_APPS`` list:
 
     INSTALLED_APPS = (
         ...
-        'bambu.blog'
+        'bambu_blog'
     )
 
-Add ``bambu.blog.urls`` to your URLconf:
+Add ``bambu_blog.urls`` to your URLconf:
 
 ::
 
     urlpatterns = patterns('',
         ...
-        url(r'^blog/', include('bambu.blog.urls')),
+        url(r'^blog/', include('bambu_blog.urls')),
     )
 
 Sync the database
@@ -71,12 +71,6 @@ it on the site once saved. View the blog post index at /blog/.
 
 Override the ``blog/post.html`` template to tweak the display of the
 blog post.
-
-Documentation
--------------
-
-Full documentation can be found at
-`ReadTheDocs <http://bambu-blog.readthedocs.org/>`_.
 
 Questions or suggestions?
 -------------------------

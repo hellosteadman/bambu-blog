@@ -5,15 +5,15 @@ from django.utils.timezone import now
 from django.template import Template, Context
 from django.conf import settings
 from taggit.managers import TaggableManager
-from bambu.blog.managers import *
-from bambu.blog import helpers, excerpt
-from bambu.attachments.models import Attachment
-from bambu.attachments.helpers import upload_attachment_file
+from bambu_blog.managers import *
+from bambu_blog import helpers, excerpt
+from bambu_attachments.models import Attachment
+from bambu_attachments.helpers import upload_attachment_file
 from mimetypes import guess_type
 from hashlib import md5
 
-if 'bambu.webhooks' in settings.INSTALLED_APPS:
-    from bambu import webhooks
+if 'bambu_webhooks' in settings.INSTALLED_APPS:
+    from bambu_webhooks import site, send
 
 COMMENTS_MODEL = getattr(settings, 'BLOG_COMMENTS_MODEL', 'comments.Comment')
 
@@ -40,6 +40,8 @@ class Category(models.Model):
     class Meta:
         ordering = ('name',)
         verbose_name_plural = 'categories'
+        db_table = 'blog_category'
+        app_label = 'Blog'
 
 class Post(models.Model):
     """
@@ -181,8 +183,8 @@ class Post(models.Model):
             self.publish()
 
     def publish(self):
-        if 'bambu.webhooks' in settings.INSTALLED_APPS:
-            webhooks.send('post_published', self.author,
+        if 'bambu_webhooks' in settings.INSTALLED_APPS:
+            send('post_published', self.author,
                 {
                     'id': self.pk,
                     'title': self.title,
@@ -203,6 +205,8 @@ class Post(models.Model):
     class Meta:
         ordering = ('-date',)
         get_latest_by = 'date'
+        db_table = 'blog_post'
+        app_label = 'Blog'
 
     class QuerySet(models.query.QuerySet):
         """
@@ -266,12 +270,13 @@ class PostUpload(models.Model):
 
         self.url = self.file.url
         super(PostUpload, self).save(*args, **kwargs)
-
+    
     class Meta:
         db_table = 'blog_post_upload'
+        app_label = 'Blog'
 
-if 'bambu.webhooks' in settings.INSTALLED_APPS:
-    webhooks.site.register('post_published',
+if 'bambu_webhooks' in settings.INSTALLED_APPS:
+    site.register('post_published',
         description = 'Fired when a post is published',
         staff_only = True
     )

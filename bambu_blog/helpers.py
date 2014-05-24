@@ -10,7 +10,7 @@ def view_filter(**kwargs):
     Filters blog posts by year/month/day, category, tag or author
     """
     
-    from bambu.blog.models import Post, Category
+    from bambu_blog.models import Post, Category
     posts = Post.objects.select_related().live()
     
     if 'year' in kwargs:
@@ -42,7 +42,7 @@ def title_parts(**kwargs):
     Returns a tuple of strings that can be used to build the ``<title>`` tag for an HTML
     template
     """
-    from bambu.blog.models import Category
+    from bambu_blog.models import Category
     
     title_parts = [u'Blog']
     if 'year' in kwargs:
@@ -104,11 +104,11 @@ def get_post_image(post):
 def get_comments_form():
     """
     Gets the class of the form used to post comments to a blog post
-    (``bambu.comments.forms.CommentForm`` by default)
+    (``bambu_comments.forms.CommentForm`` by default)
     """
     
     klass = getattr(settings, 'BLOG_COMMENTS_FORM',
-        'bambu.comments.forms.CommentForm'
+        'bambu_comments.forms.CommentForm'
     )
     
     module, dot, klass = klass.rpartition('.')

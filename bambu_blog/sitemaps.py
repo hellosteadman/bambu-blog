@@ -1,5 +1,5 @@
 from django.contrib.sitemaps import Sitemap
-from bambu.blog.models import Post
+from bambu_blog.models import Post
 
 class BlogSitemap(Sitemap):
     changefreq = 'daily'

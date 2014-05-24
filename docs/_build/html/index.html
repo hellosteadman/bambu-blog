@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Bambu Blog &mdash; Bambu Blog 0.2.4 documentation</title>
+    <title>Bambu Blog &mdash; Bambu Blog 2.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.2.4',
+        VERSION:     '2.0.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Bambu Blog 0.2.4 documentation" href="#" />
+    <link rel="top" title="Bambu Blog 2.0.1 documentation" href="#" />
     <link rel="next" title="Views and templates" href="templates.html" /> 
   </head>
   <body>
@@ -39,7 +39,7 @@
         <li class="right" >
           <a href="templates.html" title="Views and templates"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+        <li><a href="#">Bambu Blog 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -76,14 +76,14 @@ the appropriate class names to the main body textbox).</p>
 <p>Add it to your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> list:</p>
 <div class="highlight-python"><div class="highlight"><pre>INSTALLED_APPS = (
     ...
-    &#39;bambu.blog&#39;
+    &#39;bambu_blog&#39;
 )
 </pre></div>
 </div>
-<p>Add <tt class="docutils literal"><span class="pre">bambu.blog.urls</span></tt> to your URLconf:</p>
+<p>Add <tt class="docutils literal"><span class="pre">bambu_blog.urls</span></tt> to your URLconf:</p>
 <div class="highlight-python"><div class="highlight"><pre>urlpatterns = patterns(&#39;&#39;,
     ...
-    url(r&#39;^blog/&#39;, include(&#39;bambu.blog.urls&#39;)),
+    url(r&#39;^blog/&#39;, include(&#39;bambu_blog.urls&#39;)),
 )
 </pre></div>
 </div>
@@ -108,11 +108,6 @@ it on the site once saved. View the blog post index at /blog/.</p>
 <p>Override the <tt class="docutils literal"><span class="pre">blog/post.html</span></tt> template to tweak the display of the
 blog post.</p>
 </div>
-<div class="section" id="documentation">
-<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
-<p>Full documentation can be found at
-<a class="reference external" href="http://bambu-blog.readthedocs.org/">ReadTheDocs</a>.</p>
-</div>
 <div class="section" id="questions-or-suggestions">
 <h2>Questions or suggestions?<a class="headerlink" href="#questions-or-suggestions" title="Permalink to this headline">¶</a></h2>
 <p>Find me on Twitter (&#64;iamsteadman) or <a class="reference external" href="http://steadman.io/">visit my blog</a>.</p>
@@ -120,7 +115,7 @@ blog post.</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="templates.html">Views and templates</a></li>
 <li class="toctree-l1"><a class="reference internal" href="feeds.html">Feeds</a></li>
-<li class="toctree-l1"><a class="reference internal" href="context_processor.html">Context Processor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="context_processor.html">Context processor</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cron.html">Cron job and webhook</a></li>
 <li class="toctree-l1"><a class="reference internal" href="menus.html">Menus</a></li>
 <li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
@@ -154,7 +149,6 @@ blog post.</p>
 <li><a class="reference internal" href="#installation">Installation</a></li>
 <li><a class="reference internal" href="#sync-the-database">Sync the database</a></li>
 <li><a class="reference internal" href="#basic-usage">Basic usage</a></li>
-<li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#questions-or-suggestions">Questions or suggestions?</a></li>
 </ul>
 </li>
@@ -198,7 +192,7 @@ blog post.</p>
         <li class="right" >
           <a href="templates.html" title="Views and templates"
              >next</a> |</li>
-        <li><a href="#">Bambu Blog 0.2.4 documentation</a> &raquo;</li> 
+        <li><a href="#">Bambu Blog 2.0.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

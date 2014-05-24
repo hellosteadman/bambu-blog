@@ -13,11 +13,11 @@ from django.contrib.auth.models import User
 from django.utils.timezone import get_current_timezone, now as rightnow
 from taggit.models import Tag
 from datetime import datetime
-from bambu.blog.models import Post, Category
-from bambu.blog.helpers import view_filter, title_parts, get_comments_form
+from bambu_blog.models import Post, Category
+from bambu_blog.helpers import view_filter, title_parts, get_comments_form
 
 try:
-    from bambu.enqueue import enqueue_css_block
+    from bambu_enqueue import enqueue_css_block
 except ImportError:
     def enqueue_css_block(request, css):
         pass

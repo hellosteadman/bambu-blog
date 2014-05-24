@@ -1,6 +1,6 @@
-from bambu import navigation
+from bambu_navigation import MenuBuilder, site
 
-class BlogMenuBuilder(navigation.MenuBuilder):
+class BlogMenuBuilder(MenuBuilder):
     def register_partials(self):
         return (
             {
@@ -19,4 +19,4 @@ class BlogMenuBuilder(navigation.MenuBuilder):
             }
         )
         
-navigation.site.register(BlogMenuBuilder)
+site.register(BlogMenuBuilder)

@@ -4,11 +4,11 @@ from os import path
 
 setup(
     name = 'bambu-blog',
-    version = '0.2.4',
+    version = '2.0.1',
     description = 'A simple set of models for a basic blog, with some tools for custom-designed blog post writing',
     author = 'Steadman',
     author_email = 'mark@steadman.io',
-    url = 'http://pypi.python.org/pypi/bambu-blog',
+    url = 'https://github.com/iamsteadman/bambu-blog',
     long_description = open(path.join(path.dirname(__file__), 'README')).read(),
     install_requires = [
         'Django>=1.4',
@@ -16,25 +16,22 @@ setup(
         'html2text',
         'django-taggit',
         'sorl-thumbnail',
-        'pyquery',
-        'bambu-markup',
-        'bambu-oembed',
-        'bambu-attachments',
-        'bambu-xmlrpc'
+        'bambu-markup>=2.0.0',
+        'bambu-oembed>=2.0.0',
+        'bambu-attachments>=2.0.0',
+        'bambu-xmlrpc>=2.0'
     ],
-    namespace_packages = ['bambu'],
     packages = [
-        'bambu.blog',
-        'bambu.blog.management',
-        'bambu.blog.management.commands',
-        'bambu.blog.migrations',
-        'bambu.blog.templatetags'
+        'bambu_blog',
+        'bambu_blog.management',
+        'bambu_blog.management.commands',
+        'bambu_blog.migrations',
+        'bambu_blog.templatetags'
     ],
     package_data = {
-        'bambu.blog': [
-            'templates/admin/blog/post/*.html',
+        'bambu_blog': [
             'templates/blog/*.html',
-            'templates/search/indexes/blog/*.txt',
+            'templates/search/indexes/bambu_blog/*.txt',
             'static/blog/*.js'
         ]
     },

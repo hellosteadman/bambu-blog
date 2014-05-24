@@ -3,7 +3,7 @@ Settings
 
 ``BLOG_COMMENTS_FORM``
 	The class of the form used to post comments on a blog entry, expressed as a string (default is
-	'bambu.comments.forms.CommentForm')
+	'bambu_comments.forms.CommentForm')
 
 ``BLOG_COMMENTS_MODEL``
 	The model used to store and query comments against blog posts. Use the notation supported by

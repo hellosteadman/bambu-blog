@@ -4,8 +4,8 @@ from django.contrib.sites.models import Site
 from django.conf import settings
 from django.template import Template, Context
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from bambu.blog.models import Category
-from bambu.blog.helpers import view_filter, title_parts
+from bambu_blog.models import Category
+from bambu_blog.helpers import view_filter, title_parts
 
 POSTS_PER_PAGE = getattr(settings, 'BLOG_POSTS_PER_PAGE', 10)
 

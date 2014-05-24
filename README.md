@@ -15,6 +15,12 @@ It's grown a little since then, and now supports either the
 [TinyMCE](https://github.com/aljosa/django-tinymce) editors (just install the Django app you want and
 Bambu Blog will detect it and apply the appropriate class names to the main body textbox).
 
+## About Bambu Tools 2.0
+
+This is part of a toolset called Bambu Tools. It's being moved from a namespace of `bambu` to its own
+'root-level' package, along with all the other tools in the set. If you're upgrading from a version prior
+to 2.0, please make sure to update your code to use `bambu_blog` rather than `bambu.blog`.
+
 ## Installation
 
 Install the package via Pip:
@@ -28,20 +34,18 @@ Add it to your `INSTALLED_APPS` list:
 ```python
 INSTALLED_APPS = (
     ...
-    'bambu.blog'
+    'bambu_blog'
 )
 ```
 
-Add `bambu.blog.urls` to your URLconf:
+Add `bambu_blog.urls` to your URLconf:
 
 ```python
 urlpatterns = patterns('',
     ...
-    url(r'^blog/', include('bambu.blog.urls')),
+    url(r'^blog/', include('bambu_blog.urls')),
 )
 ```
-
-## Sync the database
 
 Run `manage.py syncdb` or `manage.py migrate` to setup the database tables.
 
@@ -57,6 +61,13 @@ to publish the blog post to be able to see it on the site once saved. View the b
 /blog/.
 
 Override the `blog/post.html` template to tweak the display of the blog post.
+
+## Better with Bootstrap
+
+This package, among most in the Bambu toolset is designed to work with
+[Bambu Bootstrap](https://github.com/iamsteadman/bambu-bootstrap), a collection of flexible templates
+designed for web apps based on the Twitter Bootstrap framework. It's not a package requirement, but it'll
+mean the template structure and the context variables exposed by the view makes a little more sense.
 
 ## Todo
 

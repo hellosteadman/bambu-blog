@@ -36,20 +36,17 @@ Add it to your ``INSTALLED_APPS`` list:
 
     INSTALLED_APPS = (
         ...
-        'bambu.blog'
+        'bambu_blog'
     )
 
-Add ``bambu.blog.urls`` to your URLconf:
+Add ``bambu_blog.urls`` to your URLconf:
 
 ::
 
     urlpatterns = patterns('',
         ...
-        url(r'^blog/', include('bambu.blog.urls')),
+        url(r'^blog/', include('bambu_blog.urls')),
     )
-
-Sync the database
------------------
 
 Run ``manage.py syncdb`` or ``manage.py migrate`` to setup the database
 tables.

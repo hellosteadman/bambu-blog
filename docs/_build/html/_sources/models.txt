@@ -1,11 +1,11 @@
 Models
 ======
 
-.. automodule:: bambu.blog.models
+.. automodule:: bambu_blog.models
    :members:
 
 Managers
 --------
 
-.. automodule:: bambu.blog.managers
+.. automodule:: bambu_blog.managers
    :members:

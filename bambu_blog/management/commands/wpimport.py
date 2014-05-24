@@ -6,12 +6,17 @@ from django.utils.timezone import get_current_timezone
 from django.template.defaultfilters import slugify
 from django.db import transaction
 from django.core.files import File
-from bambu.blog.models import Post, Category
-from bambu.comments.models import Comment
-from bambu.attachments.models import Attachment
+from bambu_blog.models import Post, Category
+from bambu_comments.models import Comment
+from bambu_attachments.models import Attachment
 from optparse import make_option
 from os import sys, path, write, close, remove
-from elementtree import ElementTree
+
+try:
+    from xml.etree import ElementTree
+except ImportError:
+    from elementtree import ElementTree
+
 from datetime import datetime
 from urlparse import urlparse
 from tempfile import mkstemp

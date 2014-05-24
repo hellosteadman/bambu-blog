@@ -1,10 +1,10 @@
 from django.conf.urls import patterns, include, url
-from bambu.blog.views import posts, post, post_comment
-from bambu.blog.feeds import BlogFeed
+from bambu_blog.views import posts, post, post_comment
+from bambu_blog.feeds import BlogFeed
 from django.conf import settings
 
-if 'bambu.bootstrap' in settings.INSTALLED_APPS:
-    from bambu.bootstrap.decorators import body_classes
+if 'bambu_bootstrap' in settings.INSTALLED_APPS:
+    from bambu_bootstrap.decorators import body_classes
 else:
     def body_classes(view, *classes):
         return view

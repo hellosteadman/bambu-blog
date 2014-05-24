@@ -1,7 +1,7 @@
 from django.db.models import Manager
 
 class PostManager(Manager):
-    """A custom manager for the ``blog.Post`` model"""
+    """A custom manager for the ``bambu_blog.Post`` model"""
     
     def get_query_set(self):
         return self.model.QuerySet(self.model)

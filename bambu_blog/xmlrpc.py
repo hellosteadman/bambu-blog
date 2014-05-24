@@ -6,15 +6,15 @@ from django.template.defaultfilters import slugify
 from django.utils.timezone import now
 from django.core.urlresolvers import reverse
 from django.core.files import File
-from bambu.xmlrpc import handler, XMLRPCException
-from bambu.blog.models import Post, Category, PostUpload
+from bambu_xmlrpc import handler, XMLRPCException
+from bambu_blog.models import Post, Category, PostUpload
 from tempfile import mkstemp
 from logging import getLogger
 from pyquery import PyQuery
 from os import path, close, write
 
 STAFF_ONLY = getattr(settings, 'BLOG_XMLRPC_STAFF_ONLY', True)
-LOGGER = getLogger('bambu.blog')
+LOGGER = getLogger('bambu_blog')
 
 def clean_body(body):
     site = Site.objects.get_current()

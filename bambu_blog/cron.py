@@ -1,9 +1,9 @@
-from bambu import cron
-from bambu.blog.models import Post
+from bambu_cron import CronJob, MINUTE, site
+from bambu_blog.models import Post
 from django.utils.timezone import now
 
-class PostJob(cron.CronJob):
-    frequency = cron.MINUTE
+class PostJob(CronJob):
+    frequency = MINUTE
     
     def run(self, logger):
         date = now()
@@ -12,4 +12,4 @@ class PostJob(cron.CronJob):
             post.publish()
             post.save()
 
-cron.site.register(PostJob)
+site.register(PostJob)

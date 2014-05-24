@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from taggit.models import Tag
-from bambu.blog.models import Category, Post
+from bambu_blog.models import Category, Post
 
 class BlogModelTest(TestCase):
     def setUp(self):
