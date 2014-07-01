@@ -6,24 +6,24 @@
 		<h2>
 			<a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
 			<small>{{ post.date|date }}</small>
-			<a href="{{ post.get_absolute_url }}#comments"><span class="badge{% if post.comments.live.count > 0 %} badge-success{% endif %}" title="{{ post.comments.live.count|default:'No' }} comment{{ post.comments.live.count|pluralize }}">{{ post.comments.live.count }}</span></a>
+			<a href="{{ post.get_absolute_url }}#comments"><span class="badge{% if post.comment_count > 0 %} badge-success{% endif %}" title="{{ post.comment_count|default:'No' }} comment{{ post.comment_count|pluralize }}">{{ post.comment_count }}</span></a>
 		</h2>
 	{% endif %}
-	
+
 	{% with post.featured_attachment as thumbnail %}
 		{% if thumbnail %}
 			<a href="{{ post.get_absolute_url }}">
-				{% thumbnail thumbnail.file THUMBNAIL_WIDTH upscale=False as thumb %}
+				{% thumbnail thumbnail THUMBNAIL_WIDTH upscale=False as thumb %}
 					<img src="{{ thumb.url }}" alt="{{ post.title }}" />
 				{% endthumbnail %}
 			</a>
 		{% endif %}
 	{% endwith %}
-	
+
 	<div class="post-body">
 		{{ post.body|markdown|oembed|attachments:post }}
 	</div>
-	
+
 	{% if single %}
 		<div class="well post-meta">
 			<p>
@@ -34,10 +34,10 @@
 						<a href="{% url 'blog_posts_by_category' category.slug %}">{{ category.name }}</a>{% if not forloop.last %}, {% endif %}
 					{% endfor %}
 				{% endif %}
-				{% if post.tags.count > 0 %}
+				{% if post.tagged_items.exists %}
 					and tagged
-					{% for tag in post.tags.all %}
-						<a href="{% url 'blog_posts_by_tag' tag.slug %}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+					{% for tag in post.tagged_items.all %}
+						<a href="{% url 'blog_posts_by_tag' tagged_item.tag.slug %}">{{ tagged_item.tag.name }}</a>{% if not forloop.last %}, {% endif %}
 					{% endfor %}
 				{% endif %}
 			</p>

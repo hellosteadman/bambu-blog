@@ -129,7 +129,9 @@ def posts(request, **kwargs):
             ('', author.get_full_name() or author.username)
         )
 
-    posts = view_filter(**kwargs)
+    posts = view_filter(**kwargs).prefetch_related(
+        'tagged_items__tag'
+    ).with_featured_attachments().with_comment_counts()
     paginator = Paginator(posts, POSTS_PER_PAGE)
     page = request.GET.get('page')
 
@@ -145,7 +147,7 @@ def posts(request, **kwargs):
     context['title_parts'] = title_parts(**kwargs)
     context['body_classes'] = ['page-%d' % posts.number]
 
-    if any(posts.object_list) and posts.object_list[0].attachments.filter(featured = True).exists():
+    if any(posts.object_list) and getattr(posts.object_list[0], 'featured_attachment_file', None):
         context['body_classes'].append('first-post-has-featured-attachment')
 
     context['enqueued_styles'] = [
@@ -173,7 +175,7 @@ def post(request, year, month, day, slug):
         kwargs['published'] = True
 
     try:
-        post = Post.objects.select_related().get(**kwargs)
+        post = Post.objects.select_related().with_featured_attachments().with_comment_counts().get(**kwargs)
     except:
         raise Http404('No Post matches the given query.')
 
@@ -219,7 +221,7 @@ def post(request, year, month, day, slug):
 
         context['body_classes'].append('post-custom-css')
 
-    if post.attachments.filter(featured = True).exists():
+    if getattr(post, 'featured_attachment_file', None):
         context['body_classes'].append('post-featured-attachment')
 
     return TemplateResponse(

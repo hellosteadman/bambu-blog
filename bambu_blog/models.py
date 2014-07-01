@@ -15,14 +15,14 @@ from hashlib import md5
 if 'bambu_webhooks' in settings.INSTALLED_APPS:
     from bambu_webhooks import site, send
 
-COMMENTS_MODEL = getattr(settings, 'BLOG_COMMENTS_MODEL', 'comments.Comment')
+COMMENTS_MODEL = getattr(settings, 'BLOG_COMMENTS_MODEL', 'bambu_comments.Comment')
 
 class Category(models.Model):
     """A category under which blog posts can be filed"""
-    
+
     name = models.CharField(max_length = 100, db_index = True)
     """The category name"""
-    
+
     slug = models.SlugField(max_length = 100, unique = True)
     """The category slug (unique)"""
 
@@ -46,51 +46,51 @@ class Post(models.Model):
     """
     A blog post
     """
-    
+
     author = models.ForeignKey('auth.User', related_name = 'blog_posts')
     """The ``auth.User`` that wrote the post"""
-    
+
     title = models.CharField(max_length = 100, null = True, blank = True)
     """The title of the post (optional)"""
-    
+
     slug = models.SlugField(max_length = 100, db_index = True)
     """The slug of the post (if no title is given, a slug is generated from the total count of blog
     posts"""
-    
+
     date = models.DateTimeField(db_index = True)
     """The post date"""
-    
+
     published = models.BooleanField(default = True)
     """Whether the post is published (``True`` by default)"""
-    
+
     broadcast = models.BooleanField(default = False, editable = False)
     """Whether a webhook event was fired when the post was published"""
-    
+
     body = models.TextField()
     """The body of the post. By default this is a plain text field within the admin, but you can install
     django-markitup or django-tinymce and the admin will automatically detect one of those apps.
     Regardless of textbox interface, the body is always run through PyQuery's HTML parser, in order to
     generate a viable, readable excerpt that ignores references to things like oEmbed resources and
     images, and flattens lists, headings, quotes etc"""
-    
+
     excerpt = models.TextField(null = True, blank = True, editable = False)
     """A short, automatically-generated excerpt for the post"""
-    
+
     css = models.TextField(null = True, blank = True)
     """Custom CSS for the post (great for making custom-designed pages for each post)"""
-    
+
     tags = TaggableManager()
     """The tags assigned to the post (optional)"""
-    
+
     categories = models.ManyToManyField(Category, related_name = 'posts', null = True, blank = True)
     """The categories assigned to the post (optional)"""
 
     attachments = generic.GenericRelation(Attachment)
     """The attachments (images and other media) attached to the post (optional)"""
-    
+
     comments = generic.GenericRelation(COMMENTS_MODEL)
     """A generic link to a comment model, as defined in the ``BLOG_COMMENTS_MODEL`` setting"""
-    
+
     objects = PostManager()
 
     @models.permalink
@@ -126,7 +126,7 @@ class Post(models.Model):
         Runs CSS through Django's templating engine, allowing you to write CSS that references
         attachment URLs and the post ID without actually having to know that they are
         """
-        
+
         template = Template(self.css)
         context = Context(
             {
@@ -141,6 +141,9 @@ class Post(models.Model):
 
     def featured_attachment(self):
         """Returns the first attachment for the post, that's marked as Featured"""
+        if hasattr(self, 'featured_attachment_file'):
+            return self.featured_attachment_file
+
         try:
             return self.attachments.filter(featured = True)[0]
         except IndexError:
@@ -210,7 +213,7 @@ class Post(models.Model):
         """
         A custom queryset that adds a few utility functions to the standard one
         """
-        
+
         def live(self):
             """Returns only posts in the future that are marked as published"""
             return self.filter(
@@ -233,16 +236,43 @@ class Post(models.Model):
                     ]
                 )
 
+        def with_featured_attachments(self, only = False):
+            queryset = self.extra(
+                select = {
+                    'featured_attachment_file': 'SELECT file FROM attachments_attachment AS a ' \
+                    'INNER JOIN django_content_type AS t ON t.id = a.content_type_id ' \
+                    'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
+                    'AND a.object_id = blog_post.id AND a.featured'
+                }
+            )
+
+            if only:
+                queryset = queryset.filter(
+                    attachments__featured = True
+                ).distinct('date', 'pk')
+
+            return queryset
+
+        def with_comment_counts(self):
+            return self.extra(
+                select = {
+                    'comment_count': 'SELECT COUNT(*) FROM comments_comment AS c ' \
+                    'INNER JOIN django_content_type AS t ON t.id = c.content_type_id ' \
+                    'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
+                    'AND c.object_id = blog_post.id AND c.approved'
+                }
+            )
+
 class PostUpload(models.Model):
     """
     A temporary holding place for media uploaded via XML-RPC
     """
-    
+
     file = models.FileField(max_length = 255, upload_to = upload_attachment_file)
     url = models.CharField(max_length = 255, db_index = True)
     size = models.PositiveIntegerField(editable = False)
     mimetype = models.CharField(max_length = 50, editable = False, db_index = True)
-    
+
     def __unicode__(self):
         return self.title
 
@@ -268,7 +298,7 @@ class PostUpload(models.Model):
 
         self.url = self.file.url
         super(PostUpload, self).save(*args, **kwargs)
-    
+
     class Meta:
         db_table = 'blog_post_upload'
 

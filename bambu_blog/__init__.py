@@ -5,7 +5,7 @@ from html2text import html2text
 import string
 
 default_app_config = 'bambu_blog.apps.BlogConfig'
-__version__ = '2.0.1'
+__version__ = '2.1'
 EXCERPT_LENGTH = getattr(settings, 'BLOG_EXCERPT_LENGTH', 30)
 
 def plainify(html):

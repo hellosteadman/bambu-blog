@@ -4,7 +4,7 @@ from os import path
 
 setup(
     name = 'bambu-blog',
-    version = '2.0.1',
+    version = '2.1',
     description = 'A simple set of models for a basic blog, with some tools for custom-designed blog post writing',
     author = 'Steadman',
     author_email = 'mark@steadman.io',
