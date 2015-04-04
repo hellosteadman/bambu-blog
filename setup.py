@@ -4,21 +4,21 @@ from os import path
 
 setup(
     name = 'bambu-blog',
-    version = '2.1',
+    version = '3.0',
     description = 'A simple set of models for a basic blog, with some tools for custom-designed blog post writing',
     author = 'Steadman',
     author_email = 'mark@steadman.io',
     url = 'https://github.com/iamsteadman/bambu-blog',
     long_description = open(path.join(path.dirname(__file__), 'README')).read(),
     install_requires = [
-        'Django>=1.4',
+        'Django>=1.8',
         'pyquery',
         'html2text',
         'django-taggit',
         'sorl-thumbnail',
-        'bambu-markup>=2.0.0',
-        'bambu-oembed>=2.0.0',
-        'bambu-attachments>=2.0.0',
+        'bambu-markup>=3.0',
+        'bambu-oembed>=3.0',
+        'bambu-attachments>=3.0',
         'bambu-xmlrpc>=2.0'
     ],
     packages = [
