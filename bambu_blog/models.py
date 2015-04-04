@@ -5,7 +5,6 @@ from django.utils.timezone import now
 from django.template import Template, Context
 from django.conf import settings
 from taggit.managers import TaggableManager
-from bambu_blog.managers import *
 from bambu_blog import helpers, excerpt
 from bambu_attachments.models import Attachment
 from bambu_attachments.helpers import upload_attachment_file
@@ -41,6 +40,60 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name_plural = 'categories'
         db_table = 'blog_category'
+
+class PostQuerySet(models.QuerySet):
+    """
+    A custom queryset that adds a few utility functions to the standard one
+    """
+
+    def live(self):
+        """Returns only posts in the future that are marked as published"""
+        return self.filter(
+            date__lte = now(),
+            published = True
+        )
+
+    def css(self, rendered = False):
+        """Returns rendered CSS for all of the posts in the query"""
+        if rendered:
+            return '\n\n'.join(
+                [
+                    (post.render_css() or u'') for post in self.all()
+                ]
+            )
+        else:
+            return '\n\n'.join(
+                [
+                    (css or u'') for css in self.values_list('css', flat = True)
+                ]
+            )
+
+    def with_featured_attachments(self, only = False):
+        queryset = self.extra(
+            select = {
+                'featured_attachment_file': 'SELECT file FROM attachments_attachment AS a ' \
+                'INNER JOIN django_content_type AS t ON t.id = a.content_type_id ' \
+                'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
+                'AND a.object_id = blog_post.id AND a.featured'
+            }
+        )
+
+        if only:
+            queryset = queryset.filter(
+                attachments__featured = True
+            ).distinct('date', 'pk')
+
+        return queryset
+
+    def with_comment_counts(self):
+        return self.extra(
+            select = {
+                'comment_count': 'SELECT COUNT(*) FROM comments_comment AS c ' \
+                'INNER JOIN django_content_type AS t ON t.id = c.content_type_id ' \
+                'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
+                'AND c.object_id = blog_post.id AND c.approved'
+            }
+        )
 
 class Post(models.Model):
     """
@@ -91,7 +144,7 @@ class Post(models.Model):
     comments = generic.GenericRelation(COMMENTS_MODEL)
     """A generic link to a comment model, as defined in the ``BLOG_COMMENTS_MODEL`` setting"""
 
-    objects = PostManager()
+    objects = PostQuerySet.as_manager()
 
     @models.permalink
     def get_absolute_url(self):
@@ -209,59 +262,7 @@ class Post(models.Model):
         get_latest_by = 'date'
         db_table = 'blog_post'
 
-    class QuerySet(models.query.QuerySet):
-        """
-        A custom queryset that adds a few utility functions to the standard one
-        """
 
-        def live(self):
-            """Returns only posts in the future that are marked as published"""
-            return self.filter(
-                date__lte = now(),
-                published = True
-            )
-
-        def css(self, rendered = False):
-            """Returns rendered CSS for all of the posts in the query"""
-            if rendered:
-                return '\n\n'.join(
-                    [
-                        (post.render_css() or u'') for post in self.all()
-                    ]
-                )
-            else:
-                return '\n\n'.join(
-                    [
-                        (css or u'') for css in self.values_list('css', flat = True)
-                    ]
-                )
-
-        def with_featured_attachments(self, only = False):
-            queryset = self.extra(
-                select = {
-                    'featured_attachment_file': 'SELECT file FROM attachments_attachment AS a ' \
-                    'INNER JOIN django_content_type AS t ON t.id = a.content_type_id ' \
-                    'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
-                    'AND a.object_id = blog_post.id AND a.featured'
-                }
-            )
-
-            if only:
-                queryset = queryset.filter(
-                    attachments__featured = True
-                ).distinct('date', 'pk')
-
-            return queryset
-
-        def with_comment_counts(self):
-            return self.extra(
-                select = {
-                    'comment_count': 'SELECT COUNT(*) FROM comments_comment AS c ' \
-                    'INNER JOIN django_content_type AS t ON t.id = c.content_type_id ' \
-                    'WHERE t.app_label = \'bambu_blog\' AND t.model = \'post\' ' \
-                    'AND c.object_id = blog_post.id AND c.approved'
-                }
-            )
 
 class PostUpload(models.Model):
     """
@@ -278,7 +279,7 @@ class PostUpload(models.Model):
 
     def convert_to_attachment(self, post):
         """Converts the temporary uploaded file into an attachment"""
-        with transaction.commit_on_success():
+        with transaction.atomic():
             attachment = post.attachments.create(
                 file = self.file,
                 size = self.size,

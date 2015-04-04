@@ -196,7 +196,7 @@ def get_posts(blogid, username, password, numberOfPosts = 10):
     return posts
 
 @handler('metaWeblog.newPost')
-@transaction.commit_on_success
+@transaction.atomic
 def new_post(blogid, username, password, content, publish):
     """The ``metaWeblog.newPost`` handler"""
     
@@ -234,7 +234,7 @@ def new_post(blogid, username, password, content, publish):
     return str(post.pk)
 
 @handler('metaWeblog.editPost')
-@transaction.commit_on_success
+@transaction.atomic
 def edit_post(postid, username, password, content, publish):
     """The ``metaWeblog.editPost`` handler"""
     
@@ -301,7 +301,7 @@ def edit_post(postid, username, password, content, publish):
     return True
 
 @handler('metaWeblog.newMediaObject')
-@transaction.commit_on_success
+@transaction.atomic
 def upload_media(blogid, username, password, data):
     """The ``metaWeblog.newMediaObject`` handler"""
     
@@ -332,7 +332,7 @@ def upload_media(blogid, username, password, data):
 
 @handler('metaWeblog.deletePost')
 @handler('blogger.deletePost')
-@transaction.commit_on_success
+@transaction.atomic
 def delete_post(appkey, postid, username, password, publish):
     """The ``metaWeblog.deletePost`` handler (also conforms to ``blogger.deletePost``)"""
     

@@ -16,12 +16,6 @@ from datetime import datetime
 from bambu_blog.models import Post, Category
 from bambu_blog.helpers import view_filter, title_parts, get_comments_form
 
-try:
-    from bambu_enqueue import enqueue_css_block
-except ImportError:
-    def enqueue_css_block(request, css):
-        pass
-
 POSTS_PER_PAGE = getattr(settings, 'BLOG_POSTS_PER_PAGE', 10)
 THUMBNAIL_WIDTH = getattr(settings, 'BLOG_THUMBNAIL_WIDTH',
     getattr(settings, 'OEMBED_WIDTH', 640)
@@ -150,10 +144,6 @@ def posts(request, **kwargs):
     if any(posts.object_list) and getattr(posts.object_list[0], 'featured_attachment_file', None):
         context['body_classes'].append('first-post-has-featured-attachment')
 
-    context['enqueued_styles'] = [
-        enqueue_css_block(request, posts.object_list.css(True))
-    ]
-
     return TemplateResponse(
         request,
         templates,
@@ -215,10 +205,6 @@ def post(request, year, month, day, slug):
         context['preview'] = True
 
     if post.css:
-        context['enqueued_styles'] = [
-            enqueue_css_block(request, post.render_css)
-        ]
-
         context['body_classes'].append('post-custom-css')
 
     if getattr(post, 'featured_attachment_file', None):
@@ -248,7 +234,7 @@ def post_comment(request, year, month, day, slug):
 
     if form.is_valid():
         comment = form.save(commit = False)
-        with transaction.commit_on_success():
+        with transaction.atomic():
             if request.POST.get('content_type'):
                 comment.content_type = ContentType.objects.get(
                     pk = int(request.POST['content_type'])
@@ -296,10 +282,6 @@ def post_comment(request, year, month, day, slug):
     context['body_classes'] = ['post-%s' % post.pk, 'post-%s' % post.slug]
 
     if post.css:
-        context['enqueued_styles'] = [
-            enqueue_css_block(request, post.css)
-        ]
-
         context['body_classes'].append('post-custom-css')
 
     return TemplateResponse(
