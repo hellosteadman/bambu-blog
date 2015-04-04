@@ -278,7 +278,7 @@ class PostUpload(models.Model):
 
     def convert_to_attachment(self, post):
         """Converts the temporary uploaded file into an attachment"""
-        with transaction.commit_on_success():
+        with transaction.atomic():
             attachment = post.attachments.create(
                 file = self.file,
                 size = self.size,

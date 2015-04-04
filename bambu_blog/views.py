@@ -248,7 +248,7 @@ def post_comment(request, year, month, day, slug):
 
     if form.is_valid():
         comment = form.save(commit = False)
-        with transaction.commit_on_success():
+        with transaction.atomic():
             if request.POST.get('content_type'):
                 comment.content_type = ContentType.objects.get(
                     pk = int(request.POST['content_type'])
