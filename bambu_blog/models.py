@@ -82,7 +82,7 @@ class Post(models.Model):
     tags = TaggableManager()
     """The tags assigned to the post (optional)"""
 
-    categories = models.ManyToManyField(Category, related_name = 'posts', null = True, blank = True)
+    categories = models.ManyToManyField(Category, related_name = 'posts', blank = True)
     """The categories assigned to the post (optional)"""
 
     attachments = generic.GenericRelation(Attachment)

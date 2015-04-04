@@ -21,3 +21,14 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
+        fields = (
+            'author',
+            'title',
+            'slug',
+            'date',
+            'published',
+            'body',
+            'css',
+            'tags',
+            'categories'
+        )
