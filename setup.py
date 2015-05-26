@@ -4,7 +4,7 @@ from os import path
 
 setup(
     name = 'bambu-blog',
-    version = '3.0',
+    version = '3.0a',
     description = 'A simple set of models for a basic blog, with some tools for custom-designed blog post writing',
     author = 'Steadman',
     author_email = 'mark@steadman.io',
@@ -19,7 +19,7 @@ setup(
         'bambu-markup>=3.0',
         'bambu-oembed>=3.0',
         'bambu-attachments>=3.0',
-        'bambu-xmlrpc>=2.0'
+        'bambu-xmlrpc>=3.0'
     ],
     packages = [
         'bambu_blog',
