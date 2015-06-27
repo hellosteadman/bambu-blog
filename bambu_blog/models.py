@@ -1,15 +1,16 @@
-from django.db import models, transaction
+from bambu_attachments.helpers import upload_attachment_file
+from bambu_attachments.models import Attachment
+from bambu_blog import helpers, excerpt
+from bambu_blog.querysets import *
+from django.conf import settings
 from django.contrib.contenttypes import generic
 from django.contrib.sites.models import Site
-from django.utils.timezone import now
+from django.db import models, transaction
 from django.template import Template, Context
-from django.conf import settings
-from taggit.managers import TaggableManager
-from bambu_blog import helpers, excerpt
-from bambu_attachments.models import Attachment
-from bambu_attachments.helpers import upload_attachment_file
-from mimetypes import guess_type
+from django.utils.timezone import now
 from hashlib import md5
+from mimetypes import guess_type
+from taggit.managers import TaggableManager
 
 if 'bambu_webhooks' in settings.INSTALLED_APPS:
     from bambu_webhooks import site, send
@@ -261,8 +262,6 @@ class Post(models.Model):
         ordering = ('-date',)
         get_latest_by = 'date'
         db_table = 'blog_post'
-
-
 
 class PostUpload(models.Model):
     """
