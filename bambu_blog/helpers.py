@@ -1,9 +1,9 @@
+from datetime import datetime
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.timezone import get_current_timezone
-from django.utils.importlib import import_module
-from django.conf import settings
+from importlib import import_module
 from taggit.models import Tag
-from datetime import datetime
 
 def view_filter(**kwargs):
     """
