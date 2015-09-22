@@ -5,5 +5,5 @@ django-taggit
 sorl-thumbnail
 bambu-markup>=3.0
 bambu-oembed>=3.0
-bambu-attachments>=3.0
+bambu-attachments>=3.1
 bambu-xmlrpc>=3.0
