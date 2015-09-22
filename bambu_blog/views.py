@@ -1,20 +1,20 @@
-from django.db.models import Count, F
-from django.db import transaction
-from django.shortcuts import get_object_or_404
-from django.template.response import TemplateResponse
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.views.decorators.http import require_POST
+from bambu_blog.helpers import view_filter, title_parts, get_comments_form
+from bambu_blog.models import Post, Category
+from datetime import datetime
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db import transaction
+from django.db.models import Count, F
+from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.template.response import TemplateResponse
 from django.utils.timezone import get_current_timezone, now as rightnow
+from django.views.decorators.http import require_POST
 from taggit.models import Tag
-from datetime import datetime
-from bambu_blog.models import Post, Category
-from bambu_blog.helpers import view_filter, title_parts, get_comments_form
 
 POSTS_PER_PAGE = getattr(settings, 'BLOG_POSTS_PER_PAGE', 10)
 THUMBNAIL_WIDTH = getattr(settings, 'BLOG_THUMBNAIL_WIDTH',
@@ -194,7 +194,7 @@ def post(request, year, month, day, slug):
             initial = {
                 'name': request.user.get_full_name() or request.user.username,
                 'email': request.user.email,
-                'website': 'http://%s/' % Site.objects.get_current().domain
+                'website': 'http://%s/' % get_current_site().domain
             }
 
         context['comment_form'] = COMMENTS_FORM_CLASS(initial = initial)

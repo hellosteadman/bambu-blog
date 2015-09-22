@@ -4,7 +4,6 @@ from bambu_blog import helpers, excerpt
 from bambu_blog.querysets import *
 from django.conf import settings
 from django.contrib.contenttypes import generic
-from django.contrib.sites.models import Site
 from django.db import models, transaction
 from django.template import Template, Context
 from django.utils.timezone import now
