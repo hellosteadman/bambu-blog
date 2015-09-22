@@ -40,6 +40,7 @@ class Category(models.Model):
         ordering = ('name',)
         verbose_name_plural = 'categories'
         db_table = 'blog_category'
+        app_label = 'bambu_blog'
 
 class PostQuerySet(models.QuerySet):
     """
@@ -261,6 +262,7 @@ class Post(models.Model):
         ordering = ('-date',)
         get_latest_by = 'date'
         db_table = 'blog_post'
+        app_label = 'bambu_blog'
 
 class PostUpload(models.Model):
     """
@@ -300,6 +302,7 @@ class PostUpload(models.Model):
 
     class Meta:
         db_table = 'blog_post_upload'
+        app_label = 'bambu_blog'
 
 if 'bambu_webhooks' in settings.INSTALLED_APPS:
     site.register('post_published',
