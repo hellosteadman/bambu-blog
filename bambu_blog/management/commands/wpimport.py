@@ -1,6 +1,7 @@
 from bambu_attachments.models import Attachment
 from bambu_blog.models import Post, Category
-from bambu_comments.models import Comment
+from datetime import datetime
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.shortcuts import get_current_site
@@ -9,19 +10,13 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.template.defaultfilters import slugify
 from django.utils.timezone import get_current_timezone
+from lxml import etree
 from optparse import make_option
 from os import sys, path, write, close, remove
-
-try:
-    from xml.etree import ElementTree
-except ImportError:
-    from elementtree import ElementTree
-
-from datetime import datetime
-from lxml import etree
 from pyquery import PyQuery
 from tempfile import mkstemp
 from urlparse import urlparse
+from xml.etree import ElementTree
 import requests
 
 XML_NS = {
@@ -219,61 +214,63 @@ class Command(BaseCommand):
                             else:
                                 post.tags.add(category.text)
 
-                    for comment in item.findall(ns('wp', 'comment')):
-                        comment_id = node_text('comment_id', 'wp', comment)
-                        comment_name = node_text('comment_author', 'wp', comment)
-                        comment_email = node_text('comment_author_email', 'wp', comment)
-                        comment_url = node_text('comment_author_url', 'wp', comment)
-                        comment_date = node_text('comment_date_gmt', 'wp', comment)
-                        comment_type = node_text('comment_type', 'wp', comment)
-                        comment_body = node_text('comment_content', 'wp', comment)
-                        comment_parent = node_text('comment_parent', 'wp', comment)
-                        comment_approved = node_text('comment_approved', 'wp', comment) == '1'
+                    if 'bambu_comments' in settings.INSTALLED_APPS:
+                        from bambu_comments.models import Comment
+                        for comment in item.findall(ns('wp', 'comment')):
+                            comment_id = node_text('comment_id', 'wp', comment)
+                            comment_name = node_text('comment_author', 'wp', comment)
+                            comment_email = node_text('comment_author_email', 'wp', comment)
+                            comment_url = node_text('comment_author_url', 'wp', comment)
+                            comment_date = node_text('comment_date_gmt', 'wp', comment)
+                            comment_type = node_text('comment_type', 'wp', comment)
+                            comment_body = node_text('comment_content', 'wp', comment)
+                            comment_parent = node_text('comment_parent', 'wp', comment)
+                            comment_approved = node_text('comment_approved', 'wp', comment) == '1'
 
-                        try:
-                            comment_id = int(comment_id)
-                        except ValueError:
-                            continue
-
-                        try:
-                            comment_parent = int(comment_parent)
-                        except ValueError:
-                            comment_parent = 0
-
-                        try:
-                            comment_date = datetime.strptime(
-                                comment_date, '%Y-%m-%d %H:%M:%S'
-                            ).replace(
-                                tzinfo = get_current_timezone()
-                            )
-                        except:
-                            continue
-
-                        if not comment_name:
-                            continue
-
-                        if not comment_type or comment_type == 'comment':
                             try:
-                                comment = post.comments.get(
-                                    name = comment_name,
-                                    sent = comment_date
-                                )
-                            except Comment.DoesNotExist:
-                                comment = Comment(
-                                    name = comment_name,
-                                    website = comment_url,
-                                    email = comment_email or '',
-                                    sent = comment_date,
-                                    approved = comment_approved,
-                                    body = comment_body,
-                                    content_type = content_type,
-                                    object_id = post.pk
-                                )
+                                comment_id = int(comment_id)
+                            except ValueError:
+                                continue
 
-                                print '- Comment by %s' % comment_name
+                            try:
+                                comment_parent = int(comment_parent)
+                            except ValueError:
+                                comment_parent = 0
 
-                            comment.save(notify = False)
-                            mappings['comments'][comment_id] = comment
+                            try:
+                                comment_date = datetime.strptime(
+                                    comment_date, '%Y-%m-%d %H:%M:%S'
+                                ).replace(
+                                    tzinfo = get_current_timezone()
+                                )
+                            except:
+                                continue
+
+                            if not comment_name:
+                                continue
+
+                            if not comment_type or comment_type == 'comment':
+                                try:
+                                    comment = post.comments.get(
+                                        name = comment_name,
+                                        sent = comment_date
+                                    )
+                                except Comment.DoesNotExist:
+                                    comment = Comment(
+                                        name = comment_name,
+                                        website = comment_url,
+                                        email = comment_email or '',
+                                        sent = comment_date,
+                                        approved = comment_approved,
+                                        body = comment_body,
+                                        content_type = content_type,
+                                        object_id = post.pk
+                                    )
+
+                                    print '- Comment by %s' % comment_name
+
+                                comment.save(notify = False)
+                                mappings['comments'][comment_id] = comment
 
                     postmeta[id] = {}
                     for meta in item.findall(ns('wp', 'postmeta')):

@@ -197,7 +197,8 @@ def post(request, year, month, day, slug):
                 'website': 'http://%s/' % get_current_site().domain
             }
 
-        context['comment_form'] = COMMENTS_FORM_CLASS(initial = initial)
+        if COMMENTS_FORM_CLASS:
+            context['comment_form'] = COMMENTS_FORM_CLASS(initial = initial)
 
     context['body_classes'] = ['post-%s' % post.pk, 'post-%s' % post.slug]
     if preview:
@@ -228,39 +229,40 @@ def post_comment(request, year, month, day, slug):
     except Post.DoesNotExist:
         raise Http404('Post not found.')
 
-    form = COMMENTS_FORM_CLASS(request.POST)
-    if request.POST.get('h0n3ytr4p'):
-        return HttpResponse('')
+    if COMMENTS_FORM_CLASS:
+        form = COMMENTS_FORM_CLASS(request.POST)
+        if request.POST.get('h0n3ytr4p'):
+            return HttpResponse('')
 
-    if form.is_valid():
-        comment = form.save(commit = False)
-        with transaction.atomic():
-            if request.POST.get('content_type'):
-                comment.content_type = ContentType.objects.get(
-                    pk = int(request.POST['content_type'])
+        if form.is_valid():
+            comment = form.save(commit = False)
+            with transaction.atomic():
+                if request.POST.get('content_type'):
+                    comment.content_type = ContentType.objects.get(
+                        pk = int(request.POST['content_type'])
+                    )
+                else:
+                    comment.content_type = ContentType.objects.get_for_model(post)
+
+                if request.POST.get('object_id'):
+                    comment.object_id = comment.content_type.get_object_for_this_type(
+                        pk = int(request.POST['object_id'])
+                    ).pk
+                else:
+                    comment.object_id = post.pk
+
+                comment.spam = comment.check_for_spam(request)
+                comment.save()
+
+                messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    u'Your comment has been submitted successfully.'
                 )
-            else:
-                comment.content_type = ContentType.objects.get_for_model(post)
 
-            if request.POST.get('object_id'):
-                comment.object_id = comment.content_type.get_object_for_this_type(
-                    pk = int(request.POST['object_id'])
-                ).pk
-            else:
-                comment.object_id = post.pk
-
-            comment.spam = comment.check_for_spam(request)
-            comment.save()
-
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                u'Your comment has been submitted successfully.'
-            )
-
-            return HttpResponseRedirect(
-                '%s?comment-sent=true' % post.get_absolute_url()
-            )
+                return HttpResponseRedirect(
+                    '%s?comment-sent=true' % post.get_absolute_url()
+                )
 
     context = _context(request)
     context['post'] = post

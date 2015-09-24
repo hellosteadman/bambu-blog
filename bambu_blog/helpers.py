@@ -111,6 +111,9 @@ def get_comments_form():
         'bambu_comments.forms.CommentForm'
     )
 
+    if not klass:
+        return None
+
     module, dot, klass = klass.rpartition('.')
     module = import_module(module)
     klass = getattr(module, klass)
