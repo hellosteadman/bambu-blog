@@ -4,7 +4,6 @@ from datetime import datetime
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.files import File
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
@@ -70,7 +69,6 @@ class Command(BaseCommand):
         }
 
         content_type = ContentType.objects.get_for_model(Post)
-        site = get_current_site()
         postmeta = {}
 
         print
@@ -349,7 +347,7 @@ class Command(BaseCommand):
                         for a in html('a[href]'):
                             href = a.get('href')
                             if href.startswith(link):
-                                href = href.replace(link, 'http://%s' % site.domain)
+                                href = href.replace(link, '')
 
                             a = PyQuery(a)
 

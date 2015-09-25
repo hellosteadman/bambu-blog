@@ -2,7 +2,6 @@ from bambu_blog.models import Post, Category, PostUpload
 from bambu_xmlrpc import handler, XMLRPCException
 from django.conf import settings
 from django.contrib.auth import authenticate
-from django.contrib.sites.shortcuts import get_current_site
 from django.core.files import File
 from django.core.urlresolvers import reverse
 from django.db import transaction
@@ -17,7 +16,6 @@ STAFF_ONLY = getattr(settings, 'BLOG_XMLRPC_STAFF_ONLY', True)
 LOGGER = getLogger('bambu_blog')
 
 def clean_body(body):
-    site = get_current_site()
     html = PyQuery('<body>' + body + '</body>')
 
     for p in html('p'):
@@ -101,7 +99,6 @@ def get_post(postid, username, password):
     """The ``metaWeblog.getPost`` handler"""
 
     user = auth(username, password)
-    site = get_current_site()
 
     try:
         post = Post.objects.get(pk = postid, author = user)
@@ -112,7 +109,7 @@ def get_post(postid, username, password):
         'postid': post.pk,
         'title': post.title or u'',
         'description': post.body or u'',
-        'link': 'http://%s%s' % (site.domain, post.get_absolute_url()),
+        'link': post.get_absolute_url(),
         'userid': post.author.username,
         'dateCreated': post.date,
         'categories': [
@@ -159,9 +156,8 @@ def get_post(postid, username, password):
 @handler('metaWeblog.getRecentPosts')
 def get_posts(blogid, username, password, numberOfPosts = 10):
     """The ``metaWeblog.getRecentPosts`` handler"""
-    
+
     user = auth(username, password)
-    site = get_current_site()
 
     if numberOfPosts > 10:
         numberOfPosts = 10
@@ -173,7 +169,7 @@ def get_posts(blogid, username, password, numberOfPosts = 10):
                 'postid': post.pk,
                 'title': post.title or u'',
                 'description': post.body or u'',
-                'link': 'http://%s%s' % (site.domain, post.get_absolute_url()),
+                'link': post.get_absolute_url(),
                 'userid': post.author.username,
                 'dateCreated': post.date,
                 'categories': [
@@ -354,7 +350,6 @@ def get_categories(blogid, username, password):
     """The ``metaWeblog.getCategories`` handler"""
 
     user = auth(username, password)
-    site = get_current_site()
 
     return [
         {
@@ -363,12 +358,8 @@ def get_categories(blogid, username, password):
             'categoryName': category.name,
             'categoryDescription': u'',
             'description': category.name,
-            'htmlUrl': 'http://%s%s' % (site.domain,
-                reverse('blog_posts_by_category', args = [category.slug])
-            ),
-            'rssUrl': 'http://%s%s' % (site.domain,
-                reverse('blog_posts_by_category_feed', args = [category.slug])
-            )
+            'htmlUrl': reverse('blog_posts_by_category', args = [category.slug]),
+            'rssUrl': reverse('blog_posts_by_category_feed', args = [category.slug])
         } for category in Category.objects.all()
     ]
 
@@ -378,15 +369,14 @@ def get_blogs(appkey, username, password):
     """The ``metaWeblog.getUsersBlogs`` handler (also conforms to ``blogger.getUsersBlogs``)"""
 
     user = auth(username, password)
-    site = get_current_site()
 
     return [
         {
             'blogid': 1,
-            'url': 'http://%s%s' % (site.domain, reverse('blog_posts')),
-            'blogName': site.name,
+            'url': reverse('blog_posts'),
+            'blogName': 'Blog',
             'isAdmin': user.is_staff,
-            'xmlrpc': 'http://%s%s' % (site.domain, reverse('xmlrpc_server'))
+            'xmlrpc': reverse('xmlrpc_server')
         }
     ]
 
@@ -394,14 +384,11 @@ def get_blogs(appkey, username, password):
 def get_blogs(appkey, username, password):
     """The ``blogger.getUserInfo`` handler"""
     user = auth(username, password)
-    site = get_current_site()
 
     return {
         'userid': user.pk,
         'nickname': user.username,
         'firstname': user.first_name,
         'lastname': user.last_name,
-        'url': 'http://%s%s' % (site.domain,
-            reverse('blog_posts_by_author', args = [user.username])
-        )
+        'url': reverse('blog_posts_by_author', args = [user.username])
     }

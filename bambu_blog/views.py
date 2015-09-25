@@ -194,7 +194,7 @@ def post(request, year, month, day, slug):
             initial = {
                 'name': request.user.get_full_name() or request.user.username,
                 'email': request.user.email,
-                'website': 'http://%s/' % get_current_site().domain
+                'website': 'http://%s/' % get_current_site(request).domain
             }
 
         if COMMENTS_FORM_CLASS:
