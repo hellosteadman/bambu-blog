@@ -40,13 +40,14 @@ class BlogFeed(Feed):
 
     def get_object(self, request, **kwargs):
         self.page = request.GET.get('page')
+        self.request = request
         return kwargs
 
     def link(self):
-        return 'http://%s/' % get_current_site().domain
+        return 'http://%s/' % get_current_site(self.request).domain
 
     def title(self, obj):
-        site = get_current_site()
+        site = get_current_site(self.request)
         parts = title_parts(**obj)
         parts.append(site.name)
         parts.reverse()
